@@ -1,0 +1,35 @@
+In many programming languages, particularly Java and Python, this behavior occurs because of how the runtime handles memory for small numbers versus floating-point numbers. 
+Why Integer 127 is True
+
+In Java and Python, small integers are cached (or "interned") to save memory and improve performance. 
+Java Integer Cache: The Java Virtual Machine (JVM) caches integer objects for the range -128 to 127 by default.
+Reference Equality:
+     When you compare two Integer objects with the value 127 using ==, you are comparing their memory addresses.
+Result: 
+     Because 127 is in the cache, both variables point to the exact same object in memory, so == returns true. Any value outside this range (like 128) results in the creation of two distinct objects with different memory addresses, making == return false. 
+Stack Overflow
+Stack Overflow
+ +6
+Why Float is False
+
+Floating-point numbers (like Float in Java or float in Python) do not have a similar caching mechanism for several reasons: 
+Infinite Precision: Unlike integers, there is an infinite number of floating-point values even between small numbers (e.g., 0.1, 0.11, 0.111). Caching them would be inefficient and nearly impossible.
+Always New Objects: In Java, every time you create a Float object via autoboxing (e.g., Float f = 1.0f;), a new object is typically created in memory.
+Result: Since two Float objects will have different memory addresses, comparing them with == returns false, even if their numerical values are identical. 
+ 
+ 
+ 
+  public class FloatRange {
+    public static void main(String[] args) {
+        Integer a=127;
+        Integer obj=127;
+        System.out.println(a==obj);//true
+        Integer b=200;
+        Integer obj1=200;
+        System.out.println(b==obj1);//false
+        Float k=127f;
+        Float m=127f;
+        System.out.println(k==m);//false 
+    }
+}
+//For ==, Integer may be true due to wrapper caching (-128 to 127), but Float is false because Float objects are not cached.
