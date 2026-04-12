@@ -1,0 +1,13 @@
+watterbottles
+class solution{
+    public int waterBottles(int bottles, int exchange){
+        int total = bottles;
+        while(bottles>=exchange){
+            int newbottles = bottles/exchange;
+            total += newbottles;
+            bottles = bottles % exchange +newbottles;
+        }
+        return total;
+    }
+    }
+}
